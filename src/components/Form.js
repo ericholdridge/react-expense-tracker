@@ -22,25 +22,26 @@ const Form = () => {
       </div>
       <form onSubmit={handleFormSubmit}>
         <div className="inputWrap">
-          <label htmlFor="">Text</label>
+          <label htmlFor="">Choose income or expense</label>
           <select value={select} onChange={(e) => setSelect(e.target.value)}>
             <option value="Income">Income</option>
             <option value="Expense">Expense</option>
           </select>
         </div>
         <div className="inputWrap">
-          <label htmlFor="">Amount</label>
-          <span>(negative = expense, positive = income)</span>
+          <span>Expense Item</span>
           <input
             type="text"
             placeholder="Enter text..."
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
           />
+          <span style={{marginTop: "6px"}}>Expense Amount</span>
           <input
             type="number"
             min="1"
             placeholder="Enter amount..."
+            step=".01"
             value={amountInput}
             onChange={(e) => setAmountInput(+e.target.value)}
           />
@@ -75,7 +76,8 @@ const styles = css`
       }
       .errorMsg {
         color: red;
-        padding: 6px 0 0
+        padding: 6px 0 0;
+        font-style: italic;
       }
     }
     label {

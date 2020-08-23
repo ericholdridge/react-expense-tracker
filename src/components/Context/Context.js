@@ -25,16 +25,18 @@ export const ExpenseProvider = ({ children }) => {
         ...history,
         { expense: textInput, amount: amountInput, option: select },
       ]);
+      // Calculate the income and expense amounts
       if (select === "Income") {
         setIncomeAmount((prevAmount) => prevAmount + amountInput);
       } else {
         setExpenseAmount((prevAmount) => prevAmount + amountInput);
       }
+    } else {
+      setErrorMsg("You must type a value into the fields. Please try again.");
     }
       // Clear the inputs values after the user submits the form
       setTextInput("");
       setAmountInput("");
-      setErrorMsg("");
   };
 
   return (

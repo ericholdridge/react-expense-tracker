@@ -8,7 +8,7 @@ const YourBalance = () => {
   return (
     <div css={styles}>
       <p>YOUR BALANCE</p>
-      <span>{total}</span>
+      <span>{total.toFixed(2)}</span>
     </div>
   );
 };
@@ -16,6 +16,7 @@ const YourBalance = () => {
 const styles = css`
   width: 100%;
   max-width: 600px;
+  padding: 20px 0 0 0;
 `;
 
 export default YourBalance;
