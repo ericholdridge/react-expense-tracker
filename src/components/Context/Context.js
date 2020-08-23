@@ -6,33 +6,35 @@ export const ExpenseProvider = ({ children }) => {
   const [textInput, setTextInput] = useState("");
   const [amountInput, setAmountInput] = useState("");
   const [history, setHistory] = useState([]);
-  const [incomeAmount, setIncomeAmount] = useState();
+  const [incomeAmount, setIncomeAmount] = useState(0);
+  const [expenseAmount, setExpenseAmount] = useState(0);
+  const [errorMsg, setErrorMsg] = useState();
+  const [select, setSelect] = useState("Income");
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    handleIncomeAmount();
-  }, [history]);
+    setTotal(incomeAmount - expenseAmount)
+  }, [amountInput]);
 
   // Add the users input values to the history array
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Add the values into an array of objects
-    setHistory([
-      ...history,
-      { expense: textInput, amount: Number(amountInput) },
-    ]);
-    // Clear the inputs values after the user submits the form
-    setTextInput("");
-    setAmountInput("");
-  };
-
-  // Get the income amount
-  const handleIncomeAmount = () => {
-    history.map((num) => {
-      if(num.amount > 0) {
-        const x_sum = history.reduce((acc, num) => acc + num.amount, 0);
-        return setIncomeAmount(x_sum);
+    if(textInput && amountInput !== "") {
+    // Add the values into an array of objects if the input fields are not blank
+      setHistory([
+        ...history,
+        { expense: textInput, amount: amountInput, option: select },
+      ]);
+      if (select === "Income") {
+        setIncomeAmount((prevAmount) => prevAmount + amountInput);
+      } else {
+        setExpenseAmount((prevAmount) => prevAmount + amountInput);
       }
-    });
+    }
+      // Clear the inputs values after the user submits the form
+      setTextInput("");
+      setAmountInput("");
+      setErrorMsg("");
   };
 
   return (
@@ -45,8 +47,12 @@ export const ExpenseProvider = ({ children }) => {
         history,
         setHistory,
         incomeAmount,
+        expenseAmount,
+        errorMsg,
+        select,
+        total,
+        setSelect,
         handleFormSubmit,
-        handleIncomeAmount
       }}
     >
       {children}

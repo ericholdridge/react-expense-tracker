@@ -15,7 +15,7 @@ const History = () => {
           return (
             <div
               key={index}
-              className={expenseItem.amount >= 0 ? "positive" : "negative"}
+              className={expenseItem.option === "Income" ? "positive" : "negative"}
             >
               <span>{expenseItem.expense}</span>
               <span>{expenseItem.amount}</span>

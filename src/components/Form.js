@@ -5,9 +5,12 @@ import { ExpenseContext } from "./Context/Context";
 
 const Form = () => {
   const {
+    amountInput,
     textInput,
     setTextInput,
-    amountInput,
+    errorMsg,
+    select,
+    setSelect,
     setAmountInput,
     handleFormSubmit,
   } = useContext(ExpenseContext);
@@ -20,22 +23,28 @@ const Form = () => {
       <form onSubmit={handleFormSubmit}>
         <div className="inputWrap">
           <label htmlFor="">Text</label>
-          <input
-            type="text"
-            placeholder="Enter text..."
-            value={textInput}
-            onChange={(e) => setTextInput(e.target.value)}
-          />
+          <select value={select} onChange={(e) => setSelect(e.target.value)}>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+          </select>
         </div>
         <div className="inputWrap">
           <label htmlFor="">Amount</label>
           <span>(negative = expense, positive = income)</span>
           <input
             type="text"
+            placeholder="Enter text..."
+            value={textInput}
+            onChange={(e) => setTextInput(e.target.value)}
+          />
+          <input
+            type="number"
+            min="1"
             placeholder="Enter amount..."
             value={amountInput}
-            onChange={(e) => setAmountInput(e.target.value)}
+            onChange={(e) => setAmountInput(+e.target.value)}
           />
+          <p className="errorMsg">{errorMsg}</p>
           <button type="submit">Add transaction</button>
         </div>
       </form>
@@ -64,11 +73,15 @@ const styles = css`
       span {
         padding: 0 0 6px 0;
       }
+      .errorMsg {
+        color: red;
+        padding: 6px 0 0
+      }
     }
     label {
       padding: 0 0 2px 0;
     }
-    input {
+    input, select {
       height: 40px;
       padding: 0 0 0 6px;
     }
